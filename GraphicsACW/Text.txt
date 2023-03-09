@@ -1,0 +1,9 @@
+shader,EnviroemntEffect.fx,VS,PS,enviromentShader
+shader,EnviroemntEffect.fx,RefractedObjectVS,RefractedObjectPS,refractedEnviromentShader
+shader,DragonFlyEffect.fx,DragonFlyVertexEntry,DragonFlyPixelEntry,objectShader
+shader,ParticleEffect.fx,ParticleVertexEntry,ParticlePixelEntry,particleShader
+envriomentObject,enviromentShader
+projectObject,Tiny\NormalMapFloor.dds,objectShader,floor,Tiny\sandFloor.sdkmesh
+projectObject,Tiny\NormalMapTwig.dds,objectShader,twig,Tiny\twigModel2.sdkmesh
+projectObject,Tiny\NormalMapFloor.dds,refractedEnviromentShader,hemisphere,Tiny\Hemisphere.sdkmesh
+dragonFlyObject,objectShader,dragonFly

@@ -1,0 +1,32 @@
+#Wed Nov 08 09:52:07 GMT 2017
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.advanced.options=
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.cdt.configuration=CPPTEST_USE_ACTIVE_CONFIG
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.compiler.command.c.win32.x86=cl.exe
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.compiler.command.cpp.win32.x86=cl.exe
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.compiler.family.win32.x86=vc_14_0
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.compiler.options.win32.x86=${cpptest\:original_options} -DPARASOFT_CPPTEST -I.
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.connected.6x.projects=
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.dependency.files.paths=${project_loc}/Makefile
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.dsp.env.var.mode=ENV_PATCH_PREPEND_MODE
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.edg.multibyte.chars.is.source.handling=AUTO
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.evc.env.var.mode=ENV_PATCH_PREPEND_MODE
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.extractor.id=vs71_extractor_id
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.linker.command.win32.x86=link.exe
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.linker.options.win32.x86=${cpptest\:original_options} ${cpptest\:project_lib_files}
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.make.command.line=make -i -B CXX\=${CPPTEST_SCAN} CC\=${CPPTEST_SCAN} LD\=${CPPTEST_SCAN}
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.make.scan.hash.code.validation=true
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.make.working.dir=${project_loc}
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.make_always_build=false
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.ode_auto_scan_mode=on_changes
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.ode_delete_bdf_postaction=false
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.ode_incremental_build=false
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.ode_options_dir=${project_loc}/cpptestscan.bdf
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.preference.store.version=1.1
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.run_orig_cmd_for_parallel_proj_bdf=true
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.runtime.location=${cpptest\:engine_loc}/runtime
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.synchronize_with_project_settings=true
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.test.case.location.patterns=*
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.test.ware.location=${workspace_loc}/.cpptest/${project_name}
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.vc71.configuration=CPPTEST_USE_ACTIVE_CONFIG
+GraphicsACW/GraphicsACW//com.parasoft.xtest.checkers.api.cpp.options.working.dir=${project_loc}
+project.path.717cc2cc-504f-49e7-8810-cc1aebd72d88=GraphicsACW/GraphicsACW
