@@ -16,7 +16,7 @@ const int IDC_TUTORIAL1 = 109;
 const int IDC_MYICON = 2;
 const int IDC_STATIC = -1;
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 

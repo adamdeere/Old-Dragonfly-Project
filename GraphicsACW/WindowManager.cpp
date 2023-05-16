@@ -1,31 +1,28 @@
 #include "WindowManager.h"
 #include <AntTweakBar.h>
 
-
-
 WindowManager::WindowManager() : g_hWnd(nullptr), g_hInst(nullptr), objectManager(nullptr), gm(nullptr)
 {
 }
 
-WindowManager::WindowManager(const WindowManager & source) : g_hWnd(source.g_hWnd), g_hInst(source.g_hInst), objectManager(source.objectManager), gm(source.gm)
+WindowManager::WindowManager(const WindowManager& source) : g_hWnd(source.g_hWnd), g_hInst(source.g_hInst), objectManager(source.objectManager), gm(source.gm)
 {
 }
 
-WindowManager & WindowManager::operator=(const WindowManager & source)
+WindowManager& WindowManager::operator=(const WindowManager& source)
 {
 	if (this == &source)
 	{
 		return *this;
 	}
-	g_hWnd = source.g_hWnd; 
-	g_hInst = source.g_hInst; 
-	objectManager = source.objectManager; 
+	g_hWnd = source.g_hWnd;
+	g_hInst = source.g_hInst;
+	objectManager = source.objectManager;
 	gm = source.gm;
 
 	return *this;
 	// TODO: insert return statement here
 }
-
 
 WindowManager::~WindowManager()
 {
@@ -34,7 +31,6 @@ WindowManager::~WindowManager()
 }
 LRESULT CALLBACK WndProc(const HWND hWnd, const UINT message, const WPARAM wParam, const LPARAM lParam)
 {
-	
 	HDC hdc;
 	if (TwEventWin(hWnd, message, wParam, lParam))
 		return 0; // Event has been handled by AntTweakBar
@@ -99,9 +95,9 @@ HRESULT WindowManager::InitWindow(const HINSTANCE hInstance, const int nCmdShow)
 HRESULT WindowManager::InitDevice()
 {
 	HRESULT hr;
-	
-	 gm = new GraphicsManager();
-	 
+
+	gm = new GraphicsManager();
+
 	hr = gm->InitilizeDrivers();
 	if (FAILED(hr))
 		return hr;
@@ -117,15 +113,15 @@ HRESULT WindowManager::InitDevice()
 	hr = gm->CreateDepthStencil(g_hWnd);
 	if (FAILED(hr))
 		return hr;
-	
+
 	TwDefine(" GLOBAL help='This example shows how to integrate AntTweakBar into a DirectX11 application.' "); // Message added to the help bar.
 	TwWindowSize(1500, 2800);
-	
+
 	objectManager = new ObjectManager(gm);
 	hr = objectManager->LoadModel(g_hWnd);
 	if (FAILED(hr))
 		return hr;
-	
+
 	return hr;
 }
 
@@ -143,7 +139,6 @@ void WindowManager::Run()
 		{
 			objectManager->UpdateModel();
 			objectManager->RenderModel();
-			
 		}
 	}
 	TwTerminate();

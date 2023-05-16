@@ -1,7 +1,5 @@
 #include "ParticleObject.h"
 
-
-
 struct ConstantBuffer
 {
 	XMMATRIX mWorld;
@@ -15,43 +13,41 @@ m_blendStateParticle(nullptr), m_NoBlendStateParticle(nullptr), particleTexture(
 {
 }
 
-
 ParticleObject::ParticleObject(int const numOfPart) : g_pVertexBuffer(nullptr), g_pConstantBuffer(nullptr), DepthStencilStateParticle(nullptr), m_rasterStateParticle(nullptr),
 m_blendStateParticle(nullptr), m_NoBlendStateParticle(nullptr), particleTexture(nullptr), particleSampler(nullptr), numberOfParticles(numOfPart), t(0)
 {
 }
 
-ParticleObject::ParticleObject(const ParticleObject & source) : g_pVertexBuffer(source.g_pVertexBuffer), g_pConstantBuffer(source.g_pConstantBuffer), DepthStencilStateParticle(source.DepthStencilStateParticle), 
-m_rasterStateParticle(source.m_rasterStateParticle),m_blendStateParticle(source.m_blendStateParticle), m_NoBlendStateParticle(source.m_NoBlendStateParticle), particleTexture(source.particleTexture), 
+ParticleObject::ParticleObject(const ParticleObject& source) : g_pVertexBuffer(source.g_pVertexBuffer), g_pConstantBuffer(source.g_pConstantBuffer), DepthStencilStateParticle(source.DepthStencilStateParticle),
+m_rasterStateParticle(source.m_rasterStateParticle), m_blendStateParticle(source.m_blendStateParticle), m_NoBlendStateParticle(source.m_NoBlendStateParticle), particleTexture(source.particleTexture),
 particleSampler(source.particleSampler), numberOfParticles(source.numberOfParticles), t(source.t)
 {
 }
 
-ParticleObject & ParticleObject::operator=(const ParticleObject & source)
+ParticleObject& ParticleObject::operator=(const ParticleObject& source)
 {
 	if (this == &source)
 	{
 		return *this;
 	}
-	   blendState = source.blendState;
-	   g_World = source.g_World;
-    	g_pVertexBuffer = source.g_pVertexBuffer;
-		g_pConstantBuffer = source.g_pConstantBuffer;
-		DepthStencilStateParticle = source.DepthStencilStateParticle;
-		m_rasterStateParticle = source.m_rasterStateParticle;
-		m_blendStateParticle = source.m_blendStateParticle;
-		m_NoBlendStateParticle = source.m_NoBlendStateParticle;
-		particleTexture = source.particleTexture;
-		particleSampler = source.particleSampler;
-		numberOfParticles = source.numberOfParticles;
-		t = source.t;
-		return *this;
+	blendState = source.blendState;
+	g_World = source.g_World;
+	g_pVertexBuffer = source.g_pVertexBuffer;
+	g_pConstantBuffer = source.g_pConstantBuffer;
+	DepthStencilStateParticle = source.DepthStencilStateParticle;
+	m_rasterStateParticle = source.m_rasterStateParticle;
+	m_blendStateParticle = source.m_blendStateParticle;
+	m_NoBlendStateParticle = source.m_NoBlendStateParticle;
+	particleTexture = source.particleTexture;
+	particleSampler = source.particleSampler;
+	numberOfParticles = source.numberOfParticles;
+	t = source.t;
+	return *this;
 	// TODO: insert return statement here
 }
 
 ParticleObject::~ParticleObject()
 {
-	
 }
 
 HRESULT ParticleObject::LoadParticle(ID3D11Device* const g_pd3dDevice)
@@ -85,10 +81,10 @@ HRESULT ParticleObject::LoadParticle(ID3D11Device* const g_pd3dDevice)
 	for (int i = 0; i < numberOfParticles; i++)
 	{
 		const float particleZ = (float)i / numberOfParticles;
-    	pVertices[i * 6] =     { XMFLOAT3(-1.0f, 1.0f, particleZ), XMFLOAT2(0.0f, 0.0f) };
-	    pVertices[i * 6 + 1] = { XMFLOAT3(1.0f, -1.0f, particleZ), XMFLOAT2(1.0f, 1.0f) };
+		pVertices[i * 6] = { XMFLOAT3(-1.0f, 1.0f, particleZ), XMFLOAT2(0.0f, 0.0f) };
+		pVertices[i * 6 + 1] = { XMFLOAT3(1.0f, -1.0f, particleZ), XMFLOAT2(1.0f, 1.0f) };
 		pVertices[i * 6 + 2] = { XMFLOAT3(-1.0f, -1.0f,particleZ), XMFLOAT2(0.0f, 1.0f) };
-			//second tri
+		//second tri
 		pVertices[i * 6 + 3] = { XMFLOAT3(-1.0f, 1.0f, particleZ), XMFLOAT2(0.0f, 0.0f) };
 		pVertices[i * 6 + 4] = { XMFLOAT3(1.0f,  1.0f, particleZ), XMFLOAT2(1.0f, 0.0f) };
 		pVertices[i * 6 + 5] = { XMFLOAT3(1.0f, -1.0f, particleZ), XMFLOAT2(1.0f, 1.0f) };
@@ -145,7 +141,7 @@ HRESULT ParticleObject::LoadParticle(ID3D11Device* const g_pd3dDevice)
 	if (FAILED(hr))
 		return hr;
 #pragma endregion
-	
+
 #pragma region creates a blend state
 
 	//this creates a blend state to enable the blend and one to disable the blend,
@@ -189,7 +185,7 @@ HRESULT ParticleObject::LoadParticle(ID3D11Device* const g_pd3dDevice)
 	return hr;
 }
 
-void ParticleObject::RenderParticle(ID3D11DeviceContext* const g_pImmediateContext, XMMATRIX const &g_View, XMMATRIX const &g_Projection, ID3D11InputLayout* const g_pVertexLayout)
+void ParticleObject::RenderParticle(ID3D11DeviceContext* const g_pImmediateContext, XMMATRIX const& g_View, XMMATRIX const& g_Projection, ID3D11InputLayout* const g_pVertexLayout)
 {
 	ConstantBuffer cb;
 	// t = 0.0f;
@@ -199,7 +195,7 @@ void ParticleObject::RenderParticle(ID3D11DeviceContext* const g_pImmediateConte
 	g_World *= mTranslate;
 	cb.mWorld = XMMatrixTranspose(g_World);
 	cb.mView = XMMatrixTranspose(g_View);
-	cb.mProjection = XMMatrixTranspose(g_Projection); 
+	cb.mProjection = XMMatrixTranspose(g_Projection);
 	static ULONGLONG timeStart = 0;
 	ULONGLONG const timeCur = GetTickCount64();
 	if (timeStart == 0)
@@ -209,7 +205,7 @@ void ParticleObject::RenderParticle(ID3D11DeviceContext* const g_pImmediateConte
 	cb.time = t;
 	UINT const stride = sizeof(ParticleVertex);
 	UINT const offset = 0;
-	
+
 	g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
 	g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_pImmediateContext->IASetInputLayout(g_pVertexLayout);
@@ -223,5 +219,4 @@ void ParticleObject::RenderParticle(ID3D11DeviceContext* const g_pImmediateConte
 	g_pImmediateContext->Draw(6 * numberOfParticles, 0);
 
 	g_pImmediateContext->OMSetBlendState(m_NoBlendStateParticle, nullptr, 1);
-
 }

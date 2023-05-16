@@ -1,12 +1,10 @@
 #include "Timer.h"
 using namespace std::chrono;
 
-
 Timer::Timer()
 {
 	last = steady_clock::now();
 }
-
 
 Timer::~Timer()
 {

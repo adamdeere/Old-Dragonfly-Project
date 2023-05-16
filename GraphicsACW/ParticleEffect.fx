@@ -8,7 +8,6 @@ cbuffer ConstantBuffer : register(b0)
 	matrix Projection;
 	float time;
 	float3 particleSize;
-
 }
 struct PS_INPUT
 {

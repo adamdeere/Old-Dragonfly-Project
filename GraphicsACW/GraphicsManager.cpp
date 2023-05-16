@@ -2,14 +2,12 @@
 #include <string>
 #include <vector>
 
-
-///to do, write a copy constructer and assignment operator so as to safely copy the object over 
+///to do, write a copy constructer and assignment operator so as to safely copy the object over
 /// so i can get hold of the varaibles without changing them
 GraphicsManager::GraphicsManager() :g_pd3dDevice(nullptr), g_pImmediateContext(nullptr), g_pSwapChain(nullptr), g_pRenderTargetView(nullptr), g_pDepthStencilView(nullptr), g_driverType(D3D_DRIVER_TYPE_NULL),
 g_featureLevel(D3D_FEATURE_LEVEL_11_0), g_pd3dDevice1(nullptr), g_pImmediateContext1(nullptr), g_pSwapChain1(nullptr), g_pDepthStencil(nullptr)
 {
 }
-
 
 GraphicsManager::~GraphicsManager()
 {
@@ -24,9 +22,7 @@ GraphicsManager::~GraphicsManager()
 	}
 	catch (const std::exception&)
 	{
-			
 	}
-	
 }
 
 HRESULT GraphicsManager::InitilizeDrivers()
@@ -49,9 +45,9 @@ HRESULT GraphicsManager::InitilizeDrivers()
 	featureLevels.push_back(D3D_FEATURE_LEVEL_11_0);
 	featureLevels.push_back(D3D_FEATURE_LEVEL_10_1);
 	featureLevels.push_back(D3D_FEATURE_LEVEL_10_0);
-	
+
 	const UINT numFeatureLevels = featureLevels.size();
-	//here builds 
+	//here builds
 	//problem starts here fixed problem by adding the libaries into the linker input directory
 	for (UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
 	{
@@ -235,27 +231,27 @@ HRESULT GraphicsManager::CreateDepthStencil(const HWND g_hWnd)
 	return hr;
 }
 
-ID3D11DeviceContext * GraphicsManager::getContext()const
+ID3D11DeviceContext* GraphicsManager::getContext()const
 {
 	return g_pImmediateContext;
 }
 
-ID3D11Device * GraphicsManager::getDevice()const
+ID3D11Device* GraphicsManager::getDevice()const
 {
 	return g_pd3dDevice;
 }
 
-IDXGISwapChain * GraphicsManager::getSwapChain()const
+IDXGISwapChain* GraphicsManager::getSwapChain()const
 {
 	return g_pSwapChain;
 }
 
-ID3D11DepthStencilView * GraphicsManager::getDepthStencilView()const
+ID3D11DepthStencilView* GraphicsManager::getDepthStencilView()const
 {
 	return g_pDepthStencilView;
 }
 
-ID3D11RenderTargetView * GraphicsManager::getRenderTargetView()const
+ID3D11RenderTargetView* GraphicsManager::getRenderTargetView()const
 {
 	return g_pRenderTargetView;
 }

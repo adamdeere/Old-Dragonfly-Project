@@ -2,10 +2,10 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <strstream> 
+#include <strstream>
 using namespace std;
 
-ObjectManager::ObjectManager() : graphicsPointer(nullptr), bar(nullptr), currentCam(nullptr), 
+ObjectManager::ObjectManager() : graphicsPointer(nullptr), bar(nullptr), currentCam(nullptr),
 lightManager(nullptr), camNumber(0), g_pRenderTargetTexture_RenTEX(nullptr), g_pRenderTargetView_RenTEX(nullptr),
 g_pTextureRV_RenTEX(nullptr), dFlyObject(nullptr), camType(""), particleObject(nullptr), takenOff(false), renderNumber(0), keyPressed(false), timer(0)
 
@@ -39,23 +39,23 @@ ObjectManager& ObjectManager::operator=(const ObjectManager& source)
 	g_pRenderTargetView_RenTEX = source.g_pRenderTargetView_RenTEX;
 	g_pTextureRV_RenTEX = source.g_pTextureRV_RenTEX;
 	dFlyObject = source.dFlyObject;
-	 sphereMesh = source.sphereMesh;
-	 dragonFlyMesh = source.dragonFlyMesh;
-	 floorMesh = source.floorMesh;
-	 twigMesh = source.twigMesh;
-	 camList = source.camList;
-	 objectList = source.objectList;
-	 shaderList = source.shaderList;
-	 camType = source.camType;
-	 particleObject = source.particleObject; 
-	 takenOff = source.takenOff;
-	 renderNumber = source.renderNumber;
-	 keyPressed = source.keyPressed;
-	 timer = source.timer;
+	sphereMesh = source.sphereMesh;
+	dragonFlyMesh = source.dragonFlyMesh;
+	floorMesh = source.floorMesh;
+	twigMesh = source.twigMesh;
+	camList = source.camList;
+	objectList = source.objectList;
+	shaderList = source.shaderList;
+	camType = source.camType;
+	particleObject = source.particleObject;
+	takenOff = source.takenOff;
+	renderNumber = source.renderNumber;
+	keyPressed = source.keyPressed;
+	timer = source.timer;
 	return *this;
 }
 
-ObjectManager::~ObjectManager() 
+ObjectManager::~ObjectManager()
 {
 	try
 	{
@@ -71,37 +71,34 @@ ObjectManager::~ObjectManager()
 		{
 			delete camList[i];
 		}
-	delete lightManager;
-	delete particleObject;
-	delete dFlyObject;
-	/*if (dFlyObject != nullptr) 
-		delete dFlyObject;*/
+		delete lightManager;
+		delete particleObject;
+		delete dFlyObject;
+		/*if (dFlyObject != nullptr)
+			delete dFlyObject;*/
 	}
 	catch (const std::exception&)
 	{
-			
 	}
-	
 }
-
 
 HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 {
-    HRESULT hr;
+	HRESULT hr;
 	RECT rc;
 	GetClientRect(g_hWnd, &rc);
-	
+
 	const UINT width = rc.right - rc.left;
 	const UINT height = rc.bottom - rc.top;
-	
+
 #pragma region file parser
 	ifstream fileIn("Text.txt");
 	string name;
 	while (fileIn.good())
 	{
 		getline(fileIn, name, ',');
-		
-		 if (name == "shader")
+
+		if (name == "shader")
 		{
 			string shaderFile;
 			string vertexEntry;
@@ -112,8 +109,6 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 			getline(fileIn, pixelEntry, ',');
 			getline(fileIn, shaderTag, '\n');
 			shaderList.push_back(new ShaderClass(shaderFile, vertexEntry, pixelEntry, shaderTag));
-			
-
 		}
 		else if (name == "dragonFlyObject")
 		{
@@ -130,7 +125,6 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 			string tag;
 			getline(fileIn, tag, '\n');
 			objectList.push_back(new EnviromentObject(tag));
-
 		}
 		else if (name == "projectObject")
 		{
@@ -145,10 +139,9 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 			getline(fileIn, modelName, '\n');
 			objectList.push_back(new ProjectObject(textureName, tag, objectName, modelName));
 		}
-	
 	}
 #pragma endregion
-	
+
 	particleObject = new ParticleObject(300);
 	for (unsigned int i = 0; i < shaderList.size(); i++)
 	{
@@ -174,8 +167,6 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 
 	//set up a new render target view here like in the labs
 	//maybe take out the target view from the graphics manager and place it here? more controll that way
-	
-
 
 	hr = TwInit(TW_DIRECT3D11, graphicsPointer->getDevice());
 	if (FAILED(hr))
@@ -183,13 +174,13 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 
 #pragma region sets up all of the ant tweak stuff
 	bar = TwNewBar("TweakBar");
-	
+
 	TwAddVarRO(bar, "time", TW_TYPE_FLOAT, &timer, " label='time' ");
 	TwAddVarCB(bar, "Translate fly", TW_TYPE_DIR3F, nullptr, DragonFlyObject::GetTranslationCallback, dFlyObject, "group=fly key=w");
 	TwAddVarCB(bar, "rotate fly", TW_TYPE_DIR3F, DragonFlyObject::SetRotationCallback, DragonFlyObject::GetRotationCallback, dFlyObject, "group=fly key=w");
 	TwAddVarCB(bar, "translate light", TW_TYPE_DIR3F, LightManager::SetTranslationCallback, LightManager::GetTranslationback, lightManager, "group=light key=w");
 	TwAddVarRW(bar, "current cam", TW_TYPE_STDSTRING, &camType, "");
-	
+
 #pragma endregion
 
 #pragma region sets up a render target view for rendering to a texture
@@ -227,16 +218,13 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
 
-
 	hr = graphicsPointer->getDevice()->CreateShaderResourceView(g_pRenderTargetTexture_RenTEX, &shaderResourceViewDesc, &g_pTextureRV_RenTEX);
 	if (FAILED(hr))
 		return hr;
 
-
 #pragma endregion
 
-
-    const XMVECTOR g_Eye = XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f);
+	const XMVECTOR g_Eye = XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f);
 	const XMVECTOR eyePosition = XMVectorSet(-6.0f, 4.5f, -3.0f, 1.0f);
 	const XMVECTOR At = XMVectorSet(0.0f, -1.0f, -1.0f, 0.0f);
 	const XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
@@ -244,9 +232,7 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 	const XMVECTOR inAt = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
 	const XMVECTOR outAt = XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f);
 	const XMMATRIX g_Projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, width / static_cast<FLOAT>(height), 0.01f, 1000.0f);
-	
-   
-	
+
 	const std::string followCamString = "follow";
 	const std::string followEyeCamString = "followEye";
 	const std::string insideCamString = "inside";
@@ -255,17 +241,16 @@ HRESULT ObjectManager::LoadModel(HWND const g_hWnd)
 	//these two will be set in the update method anyways
 	const XMMATRIX View = XMMatrixLookAtLH(g_Eye, At, Up);
 	camList.push_back(new CameraManager(followCamString, g_Eye, At, Up, View, g_Projection));
-	
+
 	camList.push_back(new CameraManager(followEyeCamString, g_Eye, At, Up, View, g_Projection));
 
 	const XMMATRIX g_View = XMMatrixLookAtLH(insideEye, inAt, Up);
 	camList.push_back(new CameraManager(insideCamString, insideEye, At, Up, g_View, g_Projection));
 	const XMMATRIX h_View = XMMatrixLookAtLH(eyePosition, At, Up);
 	camList.push_back(new CameraManager(outsideCam, eyePosition, outAt, Up, h_View, g_Projection));
-	
-	
+
 	//these two will need to be set in there correct position
-	
+
 	camNumber = 0;
 	return hr;
 }
@@ -290,7 +275,7 @@ void ObjectManager::UpdateModel()
 	//key for f3
 	if (GetAsyncKeyState(114))
 		camNumber = 2;
-	
+
 	//key for f4
 	if (GetAsyncKeyState(115))
 		camNumber = 3;
@@ -308,7 +293,6 @@ void ObjectManager::UpdateModel()
 	{
 		keyPressed == false;
 	}
-		
 
 	if (GetAsyncKeyState('R'))
 	{
@@ -324,7 +308,7 @@ void ObjectManager::UpdateModel()
 		renderNumber = 0;
 		keyPressed = false;
 	}
-	
+
 	switch (camNumber)
 	{
 	case 0:
@@ -348,9 +332,9 @@ void ObjectManager::UpdateModel()
 		camType = currentCam->GetName();
 		break;
 	}
-	
+
 	currentCam->UpdateCamPosition(dFlyObject);
-	
+
 	for (unsigned int i = 0; i < objectList.size(); i++)
 	{
 		objectList[i]->UpdateModel(renderNumber, graphicsPointer->getDevice());
@@ -360,7 +344,7 @@ void ObjectManager::UpdateModel()
 
 void ObjectManager::RenderModel()
 {
-	//this method essentially pre renders a texture that will later be used on the dragon flyes eyes should it 
+	//this method essentially pre renders a texture that will later be used on the dragon flyes eyes should it
 	//need to.
 	graphicsPointer->getContext()->ClearRenderTargetView(g_pRenderTargetView_RenTEX, Colors::MidnightBlue);
 
@@ -381,7 +365,6 @@ void ObjectManager::RenderModel()
 			{
 				objectList[j]->RenderModel(graphicsPointer->getContext(), currentCam->GetView(), currentCam->GetProjection(), currentCam->GetEye(), lightManager);
 			}
-
 		}
 	}
 	//when we get here we render the actual scene as it appears to the viewer. one slight change is we pass in the rendered
@@ -393,7 +376,7 @@ void ObjectManager::RenderModel()
 	graphicsPointer->getContext()->ClearDepthStencilView(graphicsPointer->getDepthStencilView(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 	ID3D11RenderTargetView* const rtView = graphicsPointer->getRenderTargetView();
 	graphicsPointer->getContext()->OMSetRenderTargets(1, &rtView, graphicsPointer->getDepthStencilView());
-	
+
 	for (unsigned int i = 0; i < shaderList.size(); i++)
 	{
 		graphicsPointer->getContext()->VSSetShader(shaderList[i]->GetVertexShader(), nullptr, 0);
@@ -405,7 +388,6 @@ void ObjectManager::RenderModel()
 			const std::string objectTag = objectList[j]->GetObjectTag();
 			if (objectTag == "dragonFly")
 			{
-				
 			}
 			if (tag == objectTag)
 			{
@@ -425,14 +407,6 @@ void ObjectManager::RenderModel()
 		}
 	}
 	TwDraw();
-	
+
 	graphicsPointer->getSwapChain()->Present(0, 0);
 }
-
-
-
-
-
-
-
-

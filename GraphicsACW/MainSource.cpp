@@ -24,9 +24,9 @@ int WINAPI WinMain(const HINSTANCE hInstance, const HINSTANCE hPrevInstance, con
 	{
 		window->Run();
 	}
-	
+
 	delete window;
 	window = nullptr;
-	
+
 	return static_cast<int>(msg.wParam);
 }

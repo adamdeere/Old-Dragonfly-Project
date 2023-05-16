@@ -10,16 +10,16 @@ class CameraManager
 {
 public:
 	CameraManager();
-	CameraManager(const std::string &name, XMVECTOR const &g_Eye, XMVECTOR const &At, XMVECTOR const &Up, XMMATRIX const &g_View, XMMATRIX const &g_Projection);
-	CameraManager(const CameraManager&  source);
-	CameraManager& operator= (const CameraManager&  source);
+	CameraManager(const std::string& name, XMVECTOR const& g_Eye, XMVECTOR const& At, XMVECTOR const& Up, XMMATRIX const& g_View, XMMATRIX const& g_Projection);
+	CameraManager(const CameraManager& source);
+	CameraManager& operator= (const CameraManager& source);
 	~CameraManager();
 
-	 const XMVECTOR& const GetEye() const;
-	 const XMMATRIX& const GetView()const;
-	 const XMMATRIX& const GetProjection()const;
+	const XMVECTOR& const GetEye() const;
+	const XMMATRIX& const GetView()const;
+	const XMMATRIX& const GetProjection()const;
 	CameraManager* const GetCurrentCam();
-	 const std::string& const GetName() const ;
+	const std::string& const GetName() const;
 	void UpdateCamPosition(const DragonFlyObject* const dFly);
 	const void ResetCams();
 private:
@@ -36,6 +36,4 @@ private:
 	XMVECTOR originalUpPosition;
 	XMMATRIX originalViewPosition;
 	XMMATRIX originalWiewProjection;
-	
 };
-

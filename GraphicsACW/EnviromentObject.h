@@ -13,14 +13,14 @@ class EnviromentObject : public ProjectObject
 {
 public:
 	explicit EnviromentObject();
-	explicit EnviromentObject(const std::string  &tag);
-	EnviromentObject(const EnviromentObject&  source);
-	EnviromentObject& operator= (const EnviromentObject&  source);
-	 ~EnviromentObject() override;
+	explicit EnviromentObject(const std::string& tag);
+	EnviromentObject(const EnviromentObject& source);
+	EnviromentObject& operator= (const EnviromentObject& source);
+	~EnviromentObject() override;
 
-	 HRESULT LoadModel(ID3D11Device* const pd3dDevice, ID3D11DeviceContext* const pd3dImmediateContext) override;
-	 void RenderModel(ID3D11DeviceContext* const pd3dImmediateContext, XMMATRIX const &g_View, XMMATRIX const &g_Projection, XMVECTOR const &eyePos, LightManager* const  lightManager) override;
-	 const std::string& GetObjectTag() override;
+	HRESULT LoadModel(ID3D11Device* const pd3dDevice, ID3D11DeviceContext* const pd3dImmediateContext) override;
+	void RenderModel(ID3D11DeviceContext* const pd3dImmediateContext, XMMATRIX const& g_View, XMMATRIX const& g_Projection, XMVECTOR const& eyePos, LightManager* const  lightManager) override;
+	const std::string& GetObjectTag() override;
 private:
 
 	D3D11_RASTERIZER_DESC rasterDescSky;
@@ -37,6 +37,4 @@ private:
 	ID3D11RasterizerState* m_rasterStateEnviroment;
 
 	std::string objectTag;
-	
 };
-

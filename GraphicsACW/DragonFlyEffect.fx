@@ -12,12 +12,11 @@ cbuffer ConstantBuffer : register(b0)
 	float3 lightPosition;
 
 	float4 inEyePosition;
-	
+
 	float4 vLightDir[4];
 	float4 vLightColor[4];
 
 	matrix Rotation;
-	
 }
 struct PS_INPUT
 {
@@ -36,7 +35,6 @@ struct VS_OUTPUT
 	float3 viewDirInTang : TEXCOORD1;
 	float3 lightDirInTang[4] : TEXCOORD2;
 };
-
 
 VS_OUTPUT DragonFlyVertexEntry(PS_INPUT input)
 {
@@ -59,17 +57,16 @@ VS_OUTPUT DragonFlyVertexEntry(PS_INPUT input)
 	float3x3 mat2Tang = float3x3 (T, B, N);
 	output.viewDirInTang = mul(mat2Tang, viewDirW);
 
-
 	//turn these two into arrays
 	for (int i = 0; i < 4; i++)
 	{
-	  output.lightDirInTang[i] = mul(mat2Tang, lightDirW[i]);
+		output.lightDirInTang[i] = mul(mat2Tang, lightDirW[i]);
 	}
 	output.Pos = mul(input.Pos, World);
 	output.Pos = mul(output.Pos, View);
 	output.Pos = mul(output.Pos, Projection);
 	output.Tex = input.Tex;
-	
+
 	return output;
 }
 float4 DragonFlyPixelEntry(VS_OUTPUT input) : SV_TARGET
@@ -77,7 +74,7 @@ float4 DragonFlyPixelEntry(VS_OUTPUT input) : SV_TARGET
 	float4 finalColour = 0;
 	/*this is where height map will be added if i have time
 	float Height = modelTextureHeight.Sample(modelSampler, input.Tex).x;
-    Height = 1 * Height - 0.5;
+	Height = 1 * Height - 0.5;
 	float2 TexCorrected = input.Tex + Height * V.xy;*/
 
 	//this is where ill set up flags and tags for render states. next job
@@ -132,7 +129,7 @@ VS_OUTPUT WingVertexShader(PS_INPUT input)
 {
 	//here we will animate the wings and then clip it into the space
 	VS_OUTPUT output = (VS_OUTPUT)0;
-	
+
 	//float step = input.Pos.y;
 	//if (step < 0)
 	//{
@@ -170,5 +167,3 @@ float4 WingPixelShader(VS_OUTPUT input) : SV_TARGET
 	float4 textureColour = modelTexture.Sample(modelSampler, input.Tex);
 	return textureColour;
 }
-
-

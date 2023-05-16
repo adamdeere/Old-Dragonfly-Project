@@ -1,30 +1,29 @@
 #include "ShaderClass.h"
 
-ShaderClass::ShaderClass(const std::string & eFileName, const std::string & vertEntryPoint, const std::string & pixelEntryPoint, const std::string & tag) : effectFileString(eFileName), effectVertexString(vertEntryPoint),
-effectPixelString(pixelEntryPoint), shaderTag(tag), g_pVertexShader(nullptr), g_pPixelShader(nullptr),g_pVertexLayout(nullptr)
+ShaderClass::ShaderClass(const std::string& eFileName, const std::string& vertEntryPoint, const std::string& pixelEntryPoint, const std::string& tag) : effectFileString(eFileName), effectVertexString(vertEntryPoint),
+effectPixelString(pixelEntryPoint), shaderTag(tag), g_pVertexShader(nullptr), g_pPixelShader(nullptr), g_pVertexLayout(nullptr)
 {
 }
-ShaderClass::ShaderClass(const ShaderClass & source) :
-	effectFileString(source.effectFileString), effectVertexString(source.effectVertexString), effectPixelString(source.effectPixelString), shaderTag(source.shaderTag), 
+ShaderClass::ShaderClass(const ShaderClass& source) :
+	effectFileString(source.effectFileString), effectVertexString(source.effectVertexString), effectPixelString(source.effectPixelString), shaderTag(source.shaderTag),
 	g_pVertexShader(source.g_pVertexShader), g_pPixelShader(source.g_pPixelShader),
 	g_pVertexLayout(source.g_pVertexLayout)
 {
 }
 
-
-ShaderClass & ShaderClass::operator=(const ShaderClass & source)
+ShaderClass& ShaderClass::operator=(const ShaderClass& source)
 {
 	if (this == &source)
 	{
 		return *this;
 	}
-	     effectFileString == source.effectFileString;
-		effectVertexString == source.effectVertexString;
-		effectPixelString == source.effectPixelString;
-		shaderTag == source.shaderTag;
-		g_pVertexShader = source.g_pVertexShader;
-		g_pPixelShader = source.g_pPixelShader;
-		g_pVertexLayout = source.g_pVertexLayout;
+	effectFileString == source.effectFileString;
+	effectVertexString == source.effectVertexString;
+	effectPixelString == source.effectPixelString;
+	shaderTag == source.shaderTag;
+	g_pVertexShader = source.g_pVertexShader;
+	g_pPixelShader = source.g_pPixelShader;
+	g_pVertexLayout = source.g_pVertexLayout;
 	return *this;
 	// TODO: insert return statement here
 }
@@ -39,11 +38,10 @@ ShaderClass::~ShaderClass()
 	}
 	catch (const std::exception&)
 	{
-			
 	}
 }
 
-HRESULT ShaderClass::LoadShader(ID3D11Device* const g_pd3dDevice, ID3D11DeviceContext* const g_pImmediateContext) 
+HRESULT ShaderClass::LoadShader(ID3D11Device* const g_pd3dDevice, ID3D11DeviceContext* const g_pImmediateContext)
 {
 	const std::wstring widestr = std::wstring(effectFileString.begin(), effectFileString.end());
 	const WCHAR* const effectFileName = widestr.c_str();
@@ -67,7 +65,7 @@ HRESULT ShaderClass::LoadShader(ID3D11Device* const g_pd3dDevice, ID3D11DeviceCo
 		pVSBlob->Release();
 		return hr;
 	}
-	
+
 	//these tags are in place to set up input layouts according to the shader that the model itself will need
 	if (shaderTag == "enviromentShader" || shaderTag == "refractedEnviromentShader")
 	{
@@ -101,8 +99,8 @@ HRESULT ShaderClass::LoadShader(ID3D11Device* const g_pd3dDevice, ID3D11DeviceCo
 		if (FAILED(hr))
 			return hr;
 	}
-	
-	else if (shaderTag == "objectShader" )
+
+	else if (shaderTag == "objectShader")
 	{
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -154,7 +152,7 @@ ID3D11InputLayout* ShaderClass::GetInputLayout()
 	return g_pVertexLayout;
 }
 
- const std::string& ShaderClass::GetShaderTag()const
+const std::string& ShaderClass::GetShaderTag()const
 {
 	return shaderTag;
 }
@@ -166,8 +164,8 @@ HRESULT ShaderClass::CompileShaderFromFile(const WCHAR* const szFileName, LPCSTR
 	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #ifdef _DEBUG
 	// Set the D3DCOMPILE_DEBUG flag to embed debug information in the shaders.
-	// Setting this flag improves the shader debugging experience, but still allows 
-	// the shaders to be optimized and to run exactly the way they will run in 
+	// Setting this flag improves the shader debugging experience, but still allows
+	// the shaders to be optimized and to run exactly the way they will run in
 	// the release configuration of this program.
 	dwShaderFlags |= D3DCOMPILE_DEBUG;
 

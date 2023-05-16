@@ -15,7 +15,7 @@ struct ConstantBuffer
 };
 
 ProjectObject::ProjectObject() :
-	 normalTexture(nullptr), g_pSamplerLinear(nullptr), g_pConstantBuffer(nullptr), normalMapFilePath(""), DepthStencilStateObject(nullptr),
+	normalTexture(nullptr), g_pSamplerLinear(nullptr), g_pConstantBuffer(nullptr), normalMapFilePath(""), DepthStencilStateObject(nullptr),
 	shaderTag(""), m_RasterState(nullptr), renderNumber(0), reflectionTexture(nullptr), objectTag(""), modelFile(""), shader(nullptr)
 {
 }
@@ -23,40 +23,40 @@ ProjectObject::ProjectObject() :
 /*instaead of the transformations, will need a filepath to the objects own normal map,
 so the filepaths can be taken out of the load method
 */
-ProjectObject::ProjectObject(std::string const &normalMap, std::string const &shaderName, std::string const &objectName, std::string const &mesh) :
-	 normalTexture(nullptr), g_pSamplerLinear(nullptr), g_pConstantBuffer(nullptr), normalMapFilePath(normalMap), DepthStencilStateObject(nullptr),
+ProjectObject::ProjectObject(std::string const& normalMap, std::string const& shaderName, std::string const& objectName, std::string const& mesh) :
+	normalTexture(nullptr), g_pSamplerLinear(nullptr), g_pConstantBuffer(nullptr), normalMapFilePath(normalMap), DepthStencilStateObject(nullptr),
 	shaderTag(shaderName), m_RasterState(nullptr), renderNumber(0), reflectionTexture(nullptr), objectTag(objectName), modelFile(mesh), shader(nullptr)
 {
 }
-ProjectObject::ProjectObject(const ProjectObject & source) :
-	 normalTexture(source.normalTexture), g_pSamplerLinear(source.g_pSamplerLinear), g_pConstantBuffer(source.g_pConstantBuffer),
+ProjectObject::ProjectObject(const ProjectObject& source) :
+	normalTexture(source.normalTexture), g_pSamplerLinear(source.g_pSamplerLinear), g_pConstantBuffer(source.g_pConstantBuffer),
 	normalMapFilePath(source.normalMapFilePath), DepthStencilStateObject(source.DepthStencilStateObject),
 	shaderTag(source.shaderTag), m_RasterState(source.m_RasterState), renderNumber(source.renderNumber), reflectionTexture(source.reflectionTexture), objectTag(source.objectTag), modelFile(source.modelFile), shader(source.shader)
 {
 }
-ProjectObject & ProjectObject::operator=(const ProjectObject & source)
+ProjectObject& ProjectObject::operator=(const ProjectObject& source)
 {
 	if (this == &source)
 	{
 		return *this;
 	}
-	    camTag = source.camTag;  
-		m_Model = source.m_Model; 
-		rasterDesc = source.rasterDesc;
-		//modelFile == source.modelFile;
-		normalTexture = source.normalTexture;
-		g_pSamplerLinear = source.g_pSamplerLinear;
-		g_pConstantBuffer = source.g_pConstantBuffer;
-		normalMapFilePath = source.normalMapFilePath;
-		DepthStencilStateObject = source.DepthStencilStateObject;
-		shaderTag = source.shaderTag;
-		m_RasterState = source.m_RasterState;
-		renderNumber = source.renderNumber;
-		reflectionTexture = source.reflectionTexture;
-		objectTag =source.objectTag;
-		shader = source.shader;
-		g_Mesh = source.g_Mesh;
-		modelFile = source.modelFile;
+	camTag = source.camTag;
+	m_Model = source.m_Model;
+	rasterDesc = source.rasterDesc;
+	//modelFile == source.modelFile;
+	normalTexture = source.normalTexture;
+	g_pSamplerLinear = source.g_pSamplerLinear;
+	g_pConstantBuffer = source.g_pConstantBuffer;
+	normalMapFilePath = source.normalMapFilePath;
+	DepthStencilStateObject = source.DepthStencilStateObject;
+	shaderTag = source.shaderTag;
+	m_RasterState = source.m_RasterState;
+	renderNumber = source.renderNumber;
+	reflectionTexture = source.reflectionTexture;
+	objectTag = source.objectTag;
+	shader = source.shader;
+	g_Mesh = source.g_Mesh;
+	modelFile = source.modelFile;
 	return *this;
 	// TODO: insert return statement here
 }
@@ -70,9 +70,7 @@ ProjectObject::~ProjectObject()
 	}
 	catch (const std::exception&)
 	{
-			
 	}
-	
 }
 //definatly needs a normal texture to be set in the method
 HRESULT ProjectObject::LoadModel(ID3D11Device* const pd3dDevice, ID3D11DeviceContext* const pd3dImmediateContext)
@@ -93,7 +91,7 @@ HRESULT ProjectObject::LoadModel(ID3D11Device* const pd3dDevice, ID3D11DeviceCon
 	hr = g_Mesh.Create(pd3dDevice, modelFileName);
 	if (FAILED(hr))
 		return hr;
-	
+
 #pragma region create sample state
 	// Create the sample state
 	D3D11_SAMPLER_DESC sampDesc;
@@ -146,13 +144,13 @@ HRESULT ProjectObject::LoadModel(ID3D11Device* const pd3dDevice, ID3D11DeviceCon
 	if (FAILED(hr))
 		return hr;
 #pragma endregion
- 	
+
 #pragma region creates a raster state
 	const std::string entag = "refractedEnviromentShader";
 	if (shaderTag == entag)
 		rasterDesc.CullMode = D3D11_CULL_BACK;
-	else 
-	    rasterDesc.CullMode = D3D11_CULL_FRONT;
+	else
+		rasterDesc.CullMode = D3D11_CULL_FRONT;
 
 	rasterDesc.FillMode = D3D11_FILL_SOLID;
 	rasterDesc.ScissorEnable = false;
@@ -168,11 +166,11 @@ HRESULT ProjectObject::LoadModel(ID3D11Device* const pd3dDevice, ID3D11DeviceCon
 #pragma endregion
 
 	m_Model = XMMatrixIdentity();
-	
+
 	return hr;
 }
 
-void ProjectObject::UpdateModel(int const &renderNo, ID3D11Device* const pd3dDevice)
+void ProjectObject::UpdateModel(int const& renderNo, ID3D11Device* const pd3dDevice)
 {
 	renderNumber = renderNo;
 	switch (renderNo)
@@ -181,7 +179,7 @@ void ProjectObject::UpdateModel(int const &renderNo, ID3D11Device* const pd3dDev
 		rasterDesc.FillMode = D3D11_FILL_SOLID;
 		pd3dDevice->CreateRasterizerState(&rasterDesc, &m_RasterState);
 		break;
-	case 1 :
+	case 1:
 		rasterDesc.FillMode = D3D11_FILL_WIREFRAME;
 		pd3dDevice->CreateRasterizerState(&rasterDesc, &m_RasterState);
 		break;
@@ -191,7 +189,7 @@ void ProjectObject::UpdateModel(int const &renderNo, ID3D11Device* const pd3dDev
 	}
 }
 
-void ProjectObject::RenderModel(ID3D11DeviceContext* const pd3dImmediateContext, XMMATRIX const &g_View, XMMATRIX const &g_Projection, XMVECTOR const &eyePos, LightManager* const lightManager)
+void ProjectObject::RenderModel(ID3D11DeviceContext* const pd3dImmediateContext, XMMATRIX const& g_View, XMMATRIX const& g_Projection, XMVECTOR const& eyePos, LightManager* const lightManager)
 {
 #pragma region update the constant buffers
 	ConstantBuffer cb;
@@ -209,7 +207,7 @@ void ProjectObject::RenderModel(ID3D11DeviceContext* const pd3dImmediateContext,
 	cb.vLightColor[1] = lightManager->GetLightColour(1);
 	cb.vLightColor[2] = lightManager->GetLightColour(2);
 	cb.vLightColor[3] = lightManager->GetLightColour(3);
-//	cb.inRenderNumber = renderNumber;
+	//	cb.inRenderNumber = renderNumber;
 #pragma endregion
 	UINT Strides;
 	UINT Offsets;
@@ -218,16 +216,15 @@ void ProjectObject::RenderModel(ID3D11DeviceContext* const pd3dImmediateContext,
 	Strides = static_cast<UINT>(g_Mesh.GetVertexStride(0, 0));
 	Offsets = 0;
 	pd3dImmediateContext->IASetVertexBuffers(0, 1, &pVB, &Strides, &Offsets);
-	pd3dImmediateContext->IASetIndexBuffer(g_Mesh.GetIB11(0), g_Mesh.GetIBFormat11(0), 0); 
-	
-	
+	pd3dImmediateContext->IASetIndexBuffer(g_Mesh.GetIB11(0), g_Mesh.GetIBFormat11(0), 0);
+
 	//set constant buffers
 	pd3dImmediateContext->UpdateSubresource(g_pConstantBuffer, 0, nullptr, &cb, 0, 0);
 	pd3dImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer);
-	
+
 	pd3dImmediateContext->OMSetDepthStencilState(DepthStencilStateObject, 1);
 	pd3dImmediateContext->RSSetState(m_RasterState);
-	
+
 	//render the model
 	for (UINT subset = 0; subset < g_Mesh.GetNumSubsets(0); ++subset)
 	{
@@ -240,7 +237,7 @@ void ProjectObject::RenderModel(ID3D11DeviceContext* const pd3dImmediateContext,
 		if (shaderTag != "enviromentShader" && shaderTag != "refractedEnviromentShader")
 		{
 			const auto pDiffuseRV = g_Mesh.GetMaterial(pSubset->MaterialID)->pDiffuseRV11;
-		
+
 			pd3dImmediateContext->PSSetShaderResources(0, 1, &pDiffuseRV);
 			pd3dImmediateContext->PSSetShaderResources(1, 1, &normalTexture);
 			pd3dImmediateContext->PSSetSamplers(0, 1, &g_pSamplerLinear);
@@ -260,12 +257,12 @@ const std::string& ProjectObject::GetObjectTag()
 	return shaderTag;
 }
 
-void ProjectObject::SetReflectionTexture(ID3D11ShaderResourceView* const &value)
+void ProjectObject::SetReflectionTexture(ID3D11ShaderResourceView* const& value)
 {
 	reflectionTexture = value;
 }
 
-void ProjectObject::GetCam(std::string const &value)
+void ProjectObject::GetCam(std::string const& value)
 {
 	camTag = value;
 }
@@ -279,5 +276,3 @@ bool ProjectObject::GetTakenOffBool()
 {
 	return false;
 }
-
-

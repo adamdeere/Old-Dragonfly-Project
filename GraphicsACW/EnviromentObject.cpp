@@ -13,19 +13,18 @@ struct ConstantBuffer
 	XMVECTOR mEyeposition;
 };
 
-
-EnviromentObject::EnviromentObject(): g_pVertexBuffer(nullptr), g_pIndexBuffer(nullptr), g_pConstantBuffer(nullptr), sky_TextureRV(nullptr), sky_Sampler(nullptr),
+EnviromentObject::EnviromentObject() : g_pVertexBuffer(nullptr), g_pIndexBuffer(nullptr), g_pConstantBuffer(nullptr), sky_TextureRV(nullptr), sky_Sampler(nullptr),
 DepthStencilStateEnviroment(nullptr), m_rasterStateEnviroment(nullptr)
 {
 }
 
-EnviromentObject::EnviromentObject(const std::string &tag) : g_pVertexBuffer(nullptr), g_pIndexBuffer(nullptr), g_pConstantBuffer(nullptr), sky_TextureRV(nullptr), sky_Sampler(nullptr),
+EnviromentObject::EnviromentObject(const std::string& tag) : g_pVertexBuffer(nullptr), g_pIndexBuffer(nullptr), g_pConstantBuffer(nullptr), sky_TextureRV(nullptr), sky_Sampler(nullptr),
 DepthStencilStateEnviroment(nullptr), m_rasterStateEnviroment(nullptr), objectTag(tag)
 {
 }
 
 //EnviromentObject::EnviromentObject(const EnviromentObject & source) : g_pVertexBuffer(source.g_pVertexBuffer), g_pIndexBuffer(source.g_pIndexBuffer), g_pConstantBuffer(source.g_pConstantBuffer),
-//sky_TextureRV(source.sky_TextureRV), sky_Sampler(source.sky_Sampler), DepthStencilStateEnviroment(source.DepthStencilStateEnviroment), m_rasterStateEnviroment(source.m_rasterStateEnviroment), 
+//sky_TextureRV(source.sky_TextureRV), sky_Sampler(source.sky_Sampler), DepthStencilStateEnviroment(source.DepthStencilStateEnviroment), m_rasterStateEnviroment(source.m_rasterStateEnviroment),
 //objectTag(source.objectTag)
 //{
 //}
@@ -38,7 +37,7 @@ DepthStencilStateEnviroment(nullptr), m_rasterStateEnviroment(nullptr), objectTa
 //	}
 //	g_World = source.g_World;
 //	rasterDescSky = source.rasterDescSky;
-//	g_pVertexBuffer = source.g_pVertexBuffer; 
+//	g_pVertexBuffer = source.g_pVertexBuffer;
 //	g_pIndexBuffer = source.g_pIndexBuffer;
 //		g_pConstantBuffer = source.g_pConstantBuffer;
 //		sky_TextureRV = source.sky_TextureRV;
@@ -47,12 +46,11 @@ DepthStencilStateEnviroment(nullptr), m_rasterStateEnviroment(nullptr), objectTa
 //		m_rasterStateEnviroment = source.m_rasterStateEnviroment;
 //		objectTag = source.objectTag;
 //		DepthStencilStateEnviroment = source.DepthStencilStateEnviroment;
-//		
+//
 //
 //		return *this;
 //	// TODO: insert return statement here
 //}
-
 
 EnviromentObject::~EnviromentObject()
 {
@@ -68,7 +66,6 @@ EnviromentObject::~EnviromentObject()
 	}
 	catch (const std::exception&)
 	{
-			
 	}
 }
 
@@ -150,7 +147,7 @@ HRESULT EnviromentObject::LoadModel(ID3D11Device* const g_pd3dDevice, ID3D11Devi
 	hr = g_pd3dDevice->CreateBuffer(&bd, &InitData, &g_pIndexBuffer);
 	if (FAILED(hr))
 		return hr;
-	
+
 #pragma endregion
 
 #pragma region creates constant buffer
@@ -163,7 +160,6 @@ HRESULT EnviromentObject::LoadModel(ID3D11Device* const g_pd3dDevice, ID3D11Devi
 	if (FAILED(hr))
 		return hr;
 
-
 #pragma endregion
 
 #pragma region creates texture
@@ -172,7 +168,6 @@ HRESULT EnviromentObject::LoadModel(ID3D11Device* const g_pd3dDevice, ID3D11Devi
 	if (FAILED(hr))
 		return hr;
 #pragma endregion
-
 
 #pragma region sets up the sampler state
 	D3D11_SAMPLER_DESC sampDesc;
@@ -229,11 +224,10 @@ HRESULT EnviromentObject::LoadModel(ID3D11Device* const g_pd3dDevice, ID3D11Devi
 		return hr;
 #pragma endregion
 
-	
 	g_World = XMMatrixIdentity();
 }
 
-void EnviromentObject::RenderModel(ID3D11DeviceContext * const g_pImmediateContext, XMMATRIX const & g_View, XMMATRIX const & g_Projection, XMVECTOR const &eyePos, LightManager* const lightManager)
+void EnviromentObject::RenderModel(ID3D11DeviceContext* const g_pImmediateContext, XMMATRIX const& g_View, XMMATRIX const& g_Projection, XMVECTOR const& eyePos, LightManager* const lightManager)
 {
 	ConstantBuffer cb;
 	cb.mWorld = XMMatrixTranspose(g_World);
@@ -248,18 +242,16 @@ void EnviromentObject::RenderModel(ID3D11DeviceContext * const g_pImmediateConte
 	g_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	g_pImmediateContext->OMSetDepthStencilState(DepthStencilStateEnviroment, 1);
 	g_pImmediateContext->RSSetState(m_rasterStateEnviroment);
-	
+
 	g_pImmediateContext->PSSetShaderResources(0, 1, &sky_TextureRV);
 	g_pImmediateContext->PSSetSamplers(0, 1, &sky_Sampler);
-	
+
 	g_pImmediateContext->UpdateSubresource(g_pConstantBuffer, 0, nullptr, &cb, 0, 0);
 	g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer);
 	g_pImmediateContext->DrawIndexed(36, 0, 0);
 }
 
-const std::string & EnviromentObject::GetObjectTag()
+const std::string& EnviromentObject::GetObjectTag()
 {
 	return objectTag;
 }
-
-

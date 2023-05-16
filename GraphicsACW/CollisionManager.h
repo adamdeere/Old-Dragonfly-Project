@@ -7,9 +7,9 @@ class CollisionManager
 {
 public:
 	CollisionManager();
-	CollisionManager(XMFLOAT3 const &Position, float const &radius, int const &collisionTag, XMFLOAT3 const &newVelocity, XMFLOAT3 const &newRotation);
+	CollisionManager(XMFLOAT3 const& Position, float const& radius, int const& collisionTag, XMFLOAT3 const& newVelocity, XMFLOAT3 const& newRotation);
 	~CollisionManager();
-	bool UpdateCollsions(XMFLOAT3 const &dflyPosition, float const &dflyRadius)const;
+	bool UpdateCollsions(XMFLOAT3 const& dflyPosition, float const& dflyRadius)const;
 	const XMFLOAT3& getVelocity()const;
 	const XMFLOAT3& getRotation()const;
 	int getTag()const;
@@ -21,4 +21,3 @@ private:
 	XMFLOAT3 velocity;
 	XMFLOAT3 rotation;
 };
-

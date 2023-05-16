@@ -2,7 +2,6 @@
 // File: Enviroment.fx
 //--------------------------------------------------------------------------------------
 
-
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
@@ -25,7 +24,6 @@ struct VS_OUTPUT
 	float3 Norm : TEXCOORD0;
 	float3 viewDir : TEXCOORD1;
 };
-
 
 //--------------------------------------------------------------------------------------
 // Vertex Shader
@@ -58,8 +56,6 @@ float4 PS(VS_OUTPUT input) : SV_Target
 	return txSkyColor.Sample(txSkySampler, input.viewDir);
 }
 
-
-
 //-------------------------------------------------------------------------------------
 //shiney object vertex shader
 //-------------------------------------------------------------------------------------
@@ -67,7 +63,6 @@ VS_OUTPUT RefractedObjectVS(PS_INPUT input)
 {
 	VS_OUTPUT output = (VS_OUTPUT)0;
 
-	
 	output.viewDir = eyePosition.xyz;
 	output.Norm = input.Norm;
 
@@ -87,9 +82,6 @@ float4 RefractedObjectPS(VS_OUTPUT input) : SV_Target
 
 	float4 skyColor = txSkyColor.Sample(txSkySampler, reflViewDir);
 	float4 refrColor = txSkyColor.Sample(txSkySampler, refrViewDir);
-	
+
 	return  0.5 * skyColor + 0.5 * refrColor;
-
 }
-
-
